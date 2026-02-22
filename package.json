@@ -1,0 +1,30 @@
+{
+  "name": "bestiary-manager",
+  "version": "1.0.0",
+  "description": "Full-stack inventory management system",
+  "homepage": "https://github.com/ShreyasKR8/bestiary-manager#readme",
+  "bugs": {
+    "url": "https://github.com/ShreyasKR8/bestiary-manager/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShreyasKR8/bestiary-manager.git"
+  },
+  "license": "MIT",
+  "author": "Shreyas KR",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "ejs": "^3.0.2",
+    "express": "^5.2.1",
+    "pg": "^8.18.0"
+  },
+  "overrides": {
+    "minimatch": "^10.2.1"
+  }
+}
