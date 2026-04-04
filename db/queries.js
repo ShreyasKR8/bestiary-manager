@@ -1,17 +1,29 @@
 const pool = require('./pool');
 
-async function logMonsterType(){
-    const { rows } = await db.query('SELECT * FROM monster_type');
+async function getMonsterTypesData(){
+    const { rows } = await pool.query('SELECT * FROM monster_type');
     console.log(rows);
+    return rows;
 }
 
-async function logMonsters(){
-    const { rows } = await db.query('SELECT * FROM monsters');
+async function getMonsterTypes(){
+    const { rows } = await pool.query('SELECT name FROM monster_type');
+    const monsterTypes = [];
+    rows.forEach(row => {
+        monsterTypes.push(row.name);
+    })
+    console.log(monsterTypes);
+    return monsterTypes;
+}
+
+async function getAllMonsters(){
+    const { rows } = await pool.query('SELECT * FROM monsters');
     console.log(rows);
+    return rows;
 }
 
 async function getMonstersOfType(type){
-    const { rows } = await db.query(`
+    const { rows } = await pool.query(`
         SELECT m.*
         FROM monsters m
         JOIN monster_type mt ON
@@ -24,8 +36,8 @@ async function getMonstersOfType(type){
     return rows;
 }
 
-module.exports = [
-    logMonsterType,
-    logMonsters,
+module.exports = {
+    getMonsterTypes,
+    getAllMonsters,
     getMonstersOfType,
-];
+};
