@@ -15,3 +15,5 @@ app.listen(PORT, () => {
 });
 
 app.use('/', indexRouter);
+
+// Display monsters of selected category - need to embed monstertype id in index.ejs....
