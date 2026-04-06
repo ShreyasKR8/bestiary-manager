@@ -34,9 +34,21 @@ async function getMonstersOfType(typeId){
     return rows;
 }
 
+async function getMonsterById(id){
+    const { rows } = await pool.query(
+        `SELECT * 
+        FROM monsters
+        WHERE id = $1`,
+        [id]
+    );
+
+    return rows[0];
+}
+
 module.exports = {
     getMonsterTypes,
     getAllMonsters,
     getMonstersOfType,
-    getMonsterTypesData
+    getMonsterTypesData,
+    getMonsterById,
 };
