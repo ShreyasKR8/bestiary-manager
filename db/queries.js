@@ -30,7 +30,7 @@ async function getMonstersOfType(typeId){
         [typeId]
     );
 
-    console.log(rows);
+    // console.log(rows);
     return rows;
 }
 
