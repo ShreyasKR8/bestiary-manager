@@ -45,10 +45,18 @@ async function getMonsterById(id){
     return rows[0];
 }
 
+async function postNewMonsterType(monsterType, desc) {
+    await pool.query(`
+        INSERT INTO monster_type (name, description)
+        VALUES ($1, $2)`, 
+        [monsterType, desc]);
+}
+
 module.exports = {
     getMonsterTypes,
     getAllMonsters,
     getMonstersOfType,
     getMonsterTypesData,
     getMonsterById,
+    postNewMonsterType,
 };
