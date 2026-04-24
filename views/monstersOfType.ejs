@@ -1,0 +1,10 @@
+<div class="monsters-of-type">
+    <h1>Monsters</h1>
+    <ul>
+        <% monsters.forEach(monster => { %>
+            <li>
+                <a href="/monsters/<%= monster.id %>"><%= monster.name %></a>
+            </li>
+        <% }); %>
+    </ul>
+</div>

@@ -5,4 +5,6 @@ const router = Router();
 
 router.get('/:id', monsterController.showMonsterInfo);
 
+router.get('/', monsterController.getAllMonsters);
+
 module.exports = router;

@@ -14,3 +14,13 @@ exports.showMonsterInfo = async (req, res) => {
 
     res.render('monster', { monster : monster });
 }
+
+exports.getAllMonsters = async (req, res) => {
+    const monsters = await db.getAllMonsters();
+
+    if(monsters.length == 0) {
+        return res.status(404).send("No monsters added");
+    }
+
+    res.render('monsters', {monsters: monsters });
+}
