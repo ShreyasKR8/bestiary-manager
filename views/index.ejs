@@ -9,9 +9,9 @@
     <h2><%= title %></h2>
     <ul>
         <% monsterTypes.forEach(monsterType => { %>
-            <li><a href="/category/<%=monsterType.id %>"><%= monsterType.name %></a></li>
+            <li><a href="/monster-types/<%=monsterType.id %>/monsters"><%= monsterType.name %></a></li>
         <% }); %>
     </ul>
-    <a href="/category/new">Add new monster type</a>
+    <a href="/monster-types/new">Add new monster type</a>
 </body>
 </html>
