@@ -22,5 +22,25 @@ exports.getAllMonsters = async (req, res) => {
         return res.status(404).send("No monsters added");
     }
 
-    res.render('monsters', {monsters: monsters });
+    res.render('monsters', { monsters: monsters });
+}
+
+exports.getAddMonsterForm = async (req, res) => {
+    const monsterTypes = await db.getMonsterTypeList();
+    res.render('monsterForm', { monsterTypes: monsterTypes });
+}
+
+exports.createMonster = async (req, res) => {
+    const { name, weaknesses, monsterType } = req.body;
+    const monsterTypeId = Number(monsterType);
+
+    if(Number.isNaN(monsterTypeId)){
+        return res.status(400).send("Invalid monster type id");
+    }
+
+    const monsterData = { name, weaknesses, monsterTypeId };
+
+    await db.postNewMonster(monsterData);
+
+    res.redirect('/');
 }
