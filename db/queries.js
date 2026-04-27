@@ -2,7 +2,6 @@ const pool = require('./pool');
 
 async function getMonsterTypesData(){
     const { rows } = await pool.query('SELECT * FROM monster_type');
-    // console.log(rows);
     return rows;
 }
 
@@ -13,7 +12,6 @@ async function getMonsterTypeList(){
 
 async function getAllMonsters(){
     const { rows } = await pool.query('SELECT * FROM monsters');
-    // console.log(rows);
     return rows;
 }
 
@@ -25,7 +23,6 @@ async function getMonstersOfType(typeId){
         [typeId]
     );
 
-    // console.log(rows);
     return rows;
 }
 
