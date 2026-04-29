@@ -1,4 +1,5 @@
 const db = require('../db/queries');
+const { body, validationResult } = require("express-validator");
 
 exports.showMonsterTypes = async (req, res) => {
     const monsterTypeId = Number(req.params.typeId);
@@ -19,11 +20,28 @@ exports.getAddMonsterTypeForm = async (req, res) => {
     res.render('monsterTypeForm');
 }
 
-exports.createMonsterType = async (req, res) => {
+const validateName = [
+    body("monsterType")
+    .trim()
+    .notEmpty()
+    .withMessage("Monster type name cannot be empty")
+    .isLength({ min: 2, max: 50})
+    .escape()
+]
+
+exports.createMonsterType = [validateName, async (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).render("monsterForm", {
+                errors: errors.array(),
+                data: req.body,
+            });
+    }
+
     const monsterTypeName = req.body.monsterType;
     const description = req.body.desc;
 
     await db.postNewMonsterType(monsterTypeName, description);
     
     res.redirect('/');
-}
+}]
