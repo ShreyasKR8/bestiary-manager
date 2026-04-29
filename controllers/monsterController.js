@@ -1,4 +1,5 @@
 const db = require('../db/queries');
+const { body, validationResult } = require("express-validator");
 
 exports.showMonsterInfo = async (req, res) => {
     const monsterId = Number(req.params.id);
@@ -30,17 +31,45 @@ exports.getAddMonsterForm = async (req, res) => {
     res.render('monsterForm', { monsterTypes: monsterTypes });
 }
 
-exports.createMonster = async (req, res) => {
-    const { name, weaknesses, monsterType } = req.body;
-    const monsterTypeId = Number(monsterType);
+const validateName = [
+  body("name")
+    .trim()
+    .notEmpty().withMessage("Monster name cannot be empty")
+    .isLength({ min: 2, max: 50 }).withMessage("Must be 2-50 characters long")
+    .escape()
+];
 
-    if(Number.isNaN(monsterTypeId)){
-        return res.status(400).send("Invalid monster type id");
-    }
+const validateWeaknesses = [
+  body("weaknesses")
+    .trim()
+    .notEmpty().withMessage("This field cannot be empty")
+    .isLength({ max: 255 }).withMessage("Input too long")
+    .escape()
+];
 
-    const monsterData = { name, weaknesses, monsterTypeId };
+exports.createMonster = [ 
+    validateName, 
+    validateWeaknesses, 
 
-    await db.postNewMonster(monsterData);
+    async (req, res) => {
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+                return res.status(400).render("monsterForm", {
+                errors: errors.array(),
+                data: req.body,
+            });
+        }
 
-    res.redirect('/');
-}
+        const { name, weaknesses, monsterType } = req.body;
+        const monsterTypeId = Number(monsterType);
+
+        if(Number.isNaN(monsterTypeId)){
+            return res.status(400).send("Invalid monster type id");
+        }
+
+        const monsterData = { name, weaknesses, monsterTypeId };
+
+        await db.postNewMonster(monsterData);
+
+        res.redirect('/');
+}];

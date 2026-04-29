@@ -21,18 +21,25 @@ exports.getAddMonsterTypeForm = async (req, res) => {
 }
 
 const validateName = [
-    body("monsterType")
+  body("monsterType")
     .trim()
-    .notEmpty()
-    .withMessage("Monster type name cannot be empty")
-    .isLength({ min: 2, max: 50})
+    .notEmpty().withMessage("Monster type name cannot be empty")
+    .isLength({ min: 2, max: 50 }).withMessage("Must be 2-50 characters long")
     .escape()
-]
+];
+
+const validateDesc = [
+  body("desc")
+    .trim()
+    .notEmpty().withMessage("Description cannot be empty")
+    .isLength({ max: 255 }).withMessage("Description too long")
+    .escape()
+];
 
 exports.createMonsterType = [validateName, async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-        return res.status(400).render("monsterForm", {
+        return res.status(400).render("monsterTypeForm", {
                 errors: errors.array(),
                 data: req.body,
             });
@@ -44,4 +51,4 @@ exports.createMonsterType = [validateName, async (req, res) => {
     await db.postNewMonsterType(monsterTypeName, description);
     
     res.redirect('/');
-}]
+}];
