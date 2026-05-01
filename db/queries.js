@@ -56,6 +56,14 @@ async function postNewMonster(monsterData){
     );
 }
 
+async function deleteMonster(monsterId) {
+    await pool.query(`
+        DELETE FROM monsters
+        WHERE id=$1`,
+        [monsterId]
+    );
+}
+
 module.exports = {
     getAllMonsters,
     getMonstersOfType,
@@ -64,4 +72,5 @@ module.exports = {
     getMonsterById,
     postNewMonsterType,
     postNewMonster,
+    deleteMonster,
 };

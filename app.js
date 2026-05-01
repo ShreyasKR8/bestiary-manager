@@ -4,11 +4,15 @@ const indexRouter = require('./routes/indexRouter');
 const path = require('node:path');
 const monsterTypeRoutes = require("./routes/monsterTypeRoutes");
 const monsterRoutes = require("./routes/monsterRoutes");
+const methodOverride = require("method-override");
+
 
 const app = express();
 const PORT = 3000;
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
+app.use(methodOverride("_method"));
 
 //set up ejs view engine and path
 app.set('views', path.join(__dirname, 'views'));

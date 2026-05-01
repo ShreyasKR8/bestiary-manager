@@ -1,5 +1,21 @@
+<link rel="stylesheet" href="/css/styles.css">
+
 <div class="monster">
     <h1><%= monster.name %></h1>
     <h3>Weaknesses:</h3>
     <p><%= monster.weakness %></p>
+    <form method="POST" action="/monsters/<%= monster.id %>?_method=DELETE" class="delete-form">
+        <button type="submit" class="delete-btn" data-name="<%= monster.name %>">Delete</button>
+    </form>
 </div>
+
+<!-- Single reusable modal -->
+<div id="confirmModal" class="hidden modal">
+  <div class="modal-box">
+    <p id="modalText">Are you sure?</p>
+    <button id="confirmYes">Yes</button>
+    <button id="confirmNo">Cancel</button>
+  </div>
+</div>
+
+<script src="/js/monsters.js"></script>

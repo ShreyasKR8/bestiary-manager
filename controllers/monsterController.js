@@ -1,3 +1,4 @@
+const { query } = require('../db/pool');
 const db = require('../db/queries');
 const { body, validationResult } = require("express-validator");
 
@@ -5,7 +6,7 @@ exports.showMonsterInfo = async (req, res) => {
     const monsterId = Number(req.params.id);
 
     if(Number.isNaN(monsterId)){
-        return res.status(400).send("Imvalid monster id");
+        return res.status(400).send("Invalid monster id");
     }
 
     const monster = await db.getMonsterById(monsterId);
@@ -73,3 +74,14 @@ exports.createMonster = [
 
         res.redirect('/');
 }];
+
+exports.deleteMonster = async (req, res) => {
+    const monsterId = Number(req.params.id);
+    if(Number.isNaN(monsterId)){
+        return res.status(400).send("Invalid monster id");
+    }
+
+    await db.deleteMonster(monsterId);
+
+    res.redirect('/');
+}

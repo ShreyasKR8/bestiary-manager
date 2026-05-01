@@ -1,0 +1,22 @@
+.hidden {
+  display: none;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-box {
+  padding: 1rem;
+  border: 1px solid #222;
+  border-radius: 6px;
+  background: white;
+}
