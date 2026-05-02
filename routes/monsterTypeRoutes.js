@@ -2,14 +2,16 @@ const { Router } = require('express');
 const monsterTypeController = require('../controllers/monsterTypeController');
 const monsterController = require('../controllers/monsterController');
 
-const monsterRouter = Router();
+const router = Router();
 
-monsterRouter.get('/:typeId/monsters', monsterTypeController.showMonsterTypes);
+router.get('/:typeId/monsters', monsterTypeController.showMonstersOfType);
 
-monsterRouter.get('/new', monsterTypeController.getAddMonsterTypeForm);
+router.get('/new', monsterTypeController.getAddMonsterTypeForm);
 
-monsterRouter.post('/', monsterTypeController.createMonsterType)
+router.post('/', monsterTypeController.createMonsterType)
 
-monsterRouter.get('/monsters/:id', monsterController.showMonsterInfo);
+router.get('/monsters/:id', monsterController.showMonsterInfo);
 
-module.exports = monsterRouter;
+router.delete('/:id', monsterTypeController.deleteMonsterType);
+
+module.exports = router;

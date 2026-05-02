@@ -1,5 +1,7 @@
+<link rel="stylesheet" href="/css/styles.css">
+
 <div class="monsters-of-type">
-    <h1>Monsters</h1>
+    <h1><%= monsterType.name %></h1>
     <ul>
         <% monsters.forEach(monster => { %>
             <li>
@@ -7,4 +9,18 @@
             </li>
         <% }); %>
     </ul>
+    <form method="POST" action="/monster-types/<%= monsterType.id %>?_method=DELETE">
+        <button type="submit" class="delete-btn" data-name="<%= monsterType.name %>">Delete Category</button>
+    </form>
 </div>
+
+<!-- Single reusable modal -->
+<div id="confirmModal" class="hidden modal">
+  <div class="modal-box">
+    <p id="modalText">Are you sure?</p>
+    <button id="confirmYes">Yes</button>
+    <button id="confirmNo">Cancel</button>
+  </div>
+</div>
+
+<script src="/js/monsters.js"></script>

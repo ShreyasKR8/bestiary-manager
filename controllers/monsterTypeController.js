@@ -1,20 +1,26 @@
 const db = require('../db/queries');
 const { body, validationResult } = require("express-validator");
 
-exports.showMonsterTypes = async (req, res) => {
-    const monsterTypeId = Number(req.params.typeId);
+exports.showMonstersOfType = async (req, res) => {
+  const monsterTypeId = Number(req.params.typeId);
 
-    if(Number.isNaN(monsterTypeId)){
-        return res.status(400).send("Invalid monster type id");
-    }
+  if (Number.isNaN(monsterTypeId)) {
+    return res.status(400).send("Invalid monster type id");
+  }
 
-    const monsters = await db.getMonstersOfType(monsterTypeId);
-    if(monsters.length == 0){
-        return res.status(404).send("monster of type not found");
-    }
+  const monsterType = await db.getMonsterType(monsterTypeId);
 
-    res.render('monsters', { monsters: monsters });
-}
+  if (!monsterType) {
+    return res.status(404).send("Monster type not found");
+  }
+
+  const monsters = await db.getMonstersOfType(monsterTypeId);
+
+  res.render("monstersOfType", {
+    monsterType,
+    monsters,
+  });
+};
 
 exports.getAddMonsterTypeForm = async (req, res) => {
     res.render('monsterTypeForm');
@@ -52,3 +58,14 @@ exports.createMonsterType = [validateName, async (req, res) => {
     
     res.redirect('/');
 }];
+
+exports.deleteMonsterType = async (req, res) => {
+    const monsterTypeId = Number(req.params.id);
+    if(Number.isNaN(monsterTypeId)){
+        return res.status(400).send("Invalid monster type id");
+    }
+
+    await db.deleteMonsterType(monsterTypeId);
+
+    res.redirect('/');
+}

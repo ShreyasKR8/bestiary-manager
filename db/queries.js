@@ -10,6 +10,16 @@ async function getMonsterTypeList(){
     return rows;
 }
 
+async function getMonsterType(monsterTypeId) {
+    const { rows } = await pool.query(
+        `SELECT * 
+        FROM monster_type
+        WHERE id = $1`,
+        [monsterTypeId]
+    );
+    return rows[0];
+}
+
 async function getAllMonsters(){
     const { rows } = await pool.query('SELECT * FROM monsters');
     return rows;
@@ -64,13 +74,44 @@ async function deleteMonster(monsterId) {
     );
 }
 
+async function deleteMonsterType(monsterTypeId) {
+    //wrap in a transaction to avoid inconsistent state
+    await pool.query("BEGIN");
+    
+    try {
+        // Assign monsters under this type to 'Uncategorized' type.
+        await pool.query(
+            `UPDATE monsters
+            SET monster_type_id = (
+                SELECT id FROM monster_type
+                WHERE name = 'Uncategorized'
+            )
+            WHERE monster_type_id = $1`,
+            [monsterTypeId]
+        );
+        
+        await pool.query(
+            `DELETE FROM monster_type
+            WHERE id = $1`,
+            [monsterTypeId]
+        );
+
+        await pool.query("COMMIT");
+    } catch (err) {
+        await pool.query("ROLLBACK");
+        throw err;
+    }
+}
+
 module.exports = {
     getAllMonsters,
     getMonstersOfType,
+    getMonsterType,
     getMonsterTypesData,
     getMonsterTypeList,
     getMonsterById,
     postNewMonsterType,
     postNewMonster,
     deleteMonster,
+    deleteMonsterType
 };
