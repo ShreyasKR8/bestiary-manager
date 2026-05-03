@@ -2,7 +2,7 @@ const db = require('../db/queries');
 const { body, validationResult } = require("express-validator");
 
 exports.showMonstersOfType = async (req, res) => {
-  const monsterTypeId = Number(req.params.typeId);
+  const monsterTypeId = Number(req.params.id);
 
   if (Number.isNaN(monsterTypeId)) {
     return res.status(400).send("Invalid monster type id");
@@ -27,7 +27,7 @@ exports.getAddMonsterTypeForm = async (req, res) => {
 }
 
 const validateName = [
-  body("monsterType")
+  body("name")
     .trim()
     .notEmpty().withMessage("Monster type name cannot be empty")
     .isLength({ min: 2, max: 50 }).withMessage("Must be 2-50 characters long")
@@ -38,11 +38,14 @@ const validateDesc = [
   body("desc")
     .trim()
     .notEmpty().withMessage("Description cannot be empty")
-    .isLength({ max: 255 }).withMessage("Description too long")
+    // .isLength({ max: 255 }).withMessage("Description too long")
     .escape()
 ];
 
-exports.createMonsterType = [validateName, async (req, res) => {
+exports.createMonsterType = [
+    validateName, validateDesc,
+
+    async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.status(400).render("monsterTypeForm", {
@@ -51,13 +54,53 @@ exports.createMonsterType = [validateName, async (req, res) => {
             });
     }
 
-    const monsterTypeName = req.body.monsterType;
+    const monsterTypeName = req.body.name;
     const description = req.body.desc;
 
     await db.postNewMonsterType(monsterTypeName, description);
     
     res.redirect('/');
 }];
+
+exports.getEditMonsterTypeForm = async (req, res) => {
+    const monsterTypeId = Number(req.params.id);
+    if(Number.isNaN(monsterTypeId)) {
+        return res.status(400).send("Invalid monster type id");
+    }
+
+    const monsterTypeData = await db.getMonsterType(monsterTypeId);
+
+    res.render('editMonsterTypeForm', { monsterTypeData });
+}
+
+exports.updateMonsterTypeInfo = [
+    validateName, validateDesc,
+
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).render("editMonsterTypeForm", {
+                errors: errors.array(),
+                monsterTypeData: {
+                id: req.params.id,
+                name: req.body.name,
+                description: req.body.desc,
+            }});
+        }
+
+        const monsterTypeId = Number(req.params.id);
+
+        if (Number.isNaN(monsterTypeId)) {
+            return res.status(400).send("Invalid monster type id");
+        }
+
+        const { name, desc } = req.body;
+
+        const rowCount = await db.updateMonsterType(monsterTypeId, { name, desc });
+
+        res.redirect(`/monster-types/${monsterTypeId}/monsters`);
+    }
+];
 
 exports.deleteMonsterType = async (req, res) => {
     const monsterTypeId = Number(req.params.id);

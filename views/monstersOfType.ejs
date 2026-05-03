@@ -2,6 +2,7 @@
 
 <div class="monsters-of-type">
     <h1><%= monsterType.name %></h1>
+    <h3><%= monsterType.description %></h3>
     <ul>
         <% monsters.forEach(monster => { %>
             <li>
@@ -9,9 +10,14 @@
             </li>
         <% }); %>
     </ul>
-    <form method="POST" action="/monster-types/<%= monsterType.id %>?_method=DELETE">
-        <button type="submit" class="delete-btn" data-name="<%= monsterType.name %>">Delete Category</button>
-    </form>
+    <% if(monsterType.name != 'Uncategorized') { %>
+        <form method="GET" action="/monster-types/<%= monsterType.id %>/edit">
+            <button type="submit" class="edit-btn">Edit Info</button>
+        </form>
+        <form method="POST" action="/monster-types/<%= monsterType.id %>?_method=DELETE">
+            <button type="submit" class="delete-btn" data-name="<%= monsterType.name %>">Delete Category</button>
+        </form>
+    <% } %>
 </div>
 
 <!-- Single reusable modal -->

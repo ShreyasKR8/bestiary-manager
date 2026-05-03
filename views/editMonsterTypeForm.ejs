@@ -1,0 +1,13 @@
+<h2>Edit <%= monsterTypeData.name %></h2>
+<form method="POST" action="/monster-types/<%= monsterTypeData.id %>?_method=PUT">
+    <label for="name">Monster Type: </label>
+    <input name="name" type="text" id="name" value="<%= monsterTypeData.name %>">
+    <label for="desc">Monster Type desc: </label>
+    <textarea name="desc" type="text" id="desc"><%= monsterTypeData.description %></textarea>
+    <button type="submit" class="edit-confirm-btn">Confirm Changes</button>
+    <button type="button" 
+        onclick="window.location.href='/monster-types/<%= monsterTypeData.id %>/monsters'" 
+        class="edit-cancel-btn">
+        Cancel
+    </button>
+</form>
