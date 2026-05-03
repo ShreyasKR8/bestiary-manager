@@ -65,6 +65,12 @@ exports.deleteMonsterType = async (req, res) => {
         return res.status(400).send("Invalid monster type id");
     }
 
+    const monsterType = await db.getMonsterType(monsterTypeId);
+    
+    if(monsterType.name === 'Uncategorized') {
+        return res.status(400).send("Cannot delete the default category");
+    }
+
     await db.deleteMonsterType(monsterTypeId);
 
     res.redirect('/');
