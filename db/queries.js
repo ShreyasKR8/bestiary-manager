@@ -103,6 +103,22 @@ async function deleteMonsterType(monsterTypeId) {
     }
 }
 
+async function updateMonster(monsterId, monsterData) {
+    const query = `
+    UPDATE monsters
+    SET name = $1, 
+        weakness = $2,
+        monster_type_id = $3 
+    WHERE id = $4`;
+
+    const values = [monsterData.name, monsterData.weaknesses, 
+        monsterData.monsterTypeId, monsterId];
+
+    const result = await pool.query(query, values);
+
+    return result.rowCount;
+} 
+
 module.exports = {
     getAllMonsters,
     getMonstersOfType,
@@ -113,5 +129,6 @@ module.exports = {
     postNewMonsterType,
     postNewMonster,
     deleteMonster,
-    deleteMonsterType
+    deleteMonsterType,
+    updateMonster,
 };

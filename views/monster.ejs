@@ -4,6 +4,9 @@
     <h1><%= monster.name %></h1>
     <h3>Weaknesses:</h3>
     <p><%= monster.weakness %></p>
+    <form method="GET" action="/monsters/<%= monster.id %>/edit" class="edit-btn-form">
+        <button type="submit" class="btn edit-btn">Edit Info</button>
+    </form>
     <form method="POST" action="/monsters/<%= monster.id %>?_method=DELETE" class="delete-form">
         <button type="submit" class="delete-btn" data-name="<%= monster.name %>">Delete</button>
     </form>

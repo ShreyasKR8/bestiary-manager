@@ -75,6 +75,39 @@ exports.createMonster = [
         res.redirect('/');
 }];
 
+exports.updateMonsterInfo = async (req, res) => {
+    const monsterId = Number(req.params.id);
+    if(Number.isNaN(monsterId)){
+        return res.status(400).send("Invalid monster id");
+    }
+
+    const { name, weaknesses, monsterType } = req.body;
+    const monsterTypeId = Number(monsterType);
+
+    if(Number.isNaN(monsterTypeId)){
+        return res.status(400).send("Invalid monster type id");
+    }   
+
+    const monsterData = { name, weaknesses, monsterTypeId };
+
+    const rowCount = await db.updateMonster(monsterId, monsterData);
+
+    res.redirect('/');
+}
+
+exports.getEditForm = async (req, res) => {
+    const monsterId = Number(req.params.id);
+    if(Number.isNaN(monsterId)){
+        return res.status(400).send("Invalid monster id");
+    }
+
+    const monsterData = await db.getMonsterById(monsterId);
+
+    const monsterTypes = await db.getMonsterTypeList();
+
+    res.render('editMonsterForm', { monsterData, monsterTypes });
+}
+
 exports.deleteMonster = async (req, res) => {
     const monsterId = Number(req.params.id);
     if(Number.isNaN(monsterId)){
