@@ -1,6 +1,6 @@
 <div class="edit-monster-div">
     <h2 class="edit-heading">Edit <%= monsterData.name %></h2>
-    <form method="POST" action="/monsters/<%= monsterData.id %>">
+    <form method="POST" action="/monsters/<%= monsterData.id %>?_method=PUT">
         <label for="name">Name: </label>
         <input type="text" name="name" id="name" value="<%= monsterData.name %>">
         <label for="weaknesses">Weaknesses: </label>
@@ -17,5 +17,10 @@
             <%}) %>
         </Select>
         <button id="edit-confirm-btn" type="submit">Confirm changes</button>
+        <button type="button" 
+            onclick="window.location.href='/monsters/<%= monsterData.id %>'" 
+            class="edit-cancel-btn">
+            Cancel
+        </button>
     </form>
 </div>

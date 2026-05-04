@@ -12,6 +12,6 @@ router.get('/', monsterController.getAllMonsters);
 router.delete('/:id', monsterController.deleteMonster);
 
 router.get('/:id/edit', monsterController.getEditForm);
-router.post('/:id', monsterController.updateMonsterInfo);
+router.put('/:id', monsterController.updateMonsterInfo);
 
 module.exports = router;

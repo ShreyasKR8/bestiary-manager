@@ -92,7 +92,8 @@ exports.updateMonsterInfo = async (req, res) => {
 
     const rowCount = await db.updateMonster(monsterId, monsterData);
 
-    res.redirect('/');
+    // res.redirect('/');
+    res.redirect(`/monsters/${monsterId}`);
 }
 
 exports.getEditForm = async (req, res) => {
