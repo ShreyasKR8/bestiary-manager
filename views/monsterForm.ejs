@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="/css/styles.css">
+
 <div class="add-monster-form">
     <h2>Add new monster: </h2>
     <form method="POST" action="/monsters">
@@ -11,6 +13,6 @@
                 <option value="<%= type.id %>"><%= type.name %></option>
             <%}) %>
         </Select>
-        <button id="add-monsters" type="submit">Add</button>
+        <button class="btn-primary" id="add-monsters" type="submit">Add</button>
     </form>
 </div>

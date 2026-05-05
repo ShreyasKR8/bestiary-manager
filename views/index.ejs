@@ -4,16 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bestiary Manager</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
-<body>
-    <h1 style="text-align: center;"><%= title %></h1>
-    <ul>
-        <% monsterTypes.forEach(monsterType => { %>
-            <li><a href="/monster-types/<%=monsterType.id %>/monsters"><%= monsterType.name %></a></li>
-        <% }); %>
-    </ul>
-    <a href="/monster-types/new">Add new monster type</a>
-    <a href="/monsters/new">Add new monster</a>
-    <a href="/monsters/">All Monsters</a>
+<body class="app-shell">
+    <main class="home-page">
+        <section class="home-hero" aria-labelledby="page-title">
+            <div>
+                <p class="eyebrow">Inventory and field notes</p>
+                <h1 id="page-title"><%= title %></h1>
+                <p class="hero-copy">
+                    Track monster categories, record weaknesses, and keep the path clear before the next contract.
+                </p>
+            </div>
+
+            <nav class="quick-actions" aria-label="Primary actions">
+                <a class="btn btn-primary" href="/monsters/new">Add Monster</a>
+                <a class="btn" href="/monster-types/new">Add Type</a>
+                <a class="btn btn-quiet" href="/monsters/">All Monsters</a>
+            </nav>
+        </section>
+
+        <section class="section-header" aria-labelledby="types-title">
+            <div>
+                <p class="eyebrow">Known classifications</p>
+                <h2 id="types-title">Monster Types</h2>
+            </div>
+            <span class="count-pill"><%= monsterTypes.length %> logged</span>
+        </section>
+
+        <% if (monsterTypes.length) { %>
+            <ul class="type-grid">
+                <% monsterTypes.forEach(monsterType => { %>
+                    <li>
+                        <a class="type-card" href="/monster-types/<%= monsterType.id %>/monsters">
+                            <span class="type-mark" aria-hidden="true"><%= monsterType.name.slice(0, 1).toUpperCase() %></span>
+                            <span class="type-card-content">
+                                <span class="type-name"><%= monsterType.name %></span>
+                                <span class="type-link">View entries</span>
+                            </span>
+                        </a>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <div class="empty-state">
+                <h2>No monster types yet</h2>
+                <p>Add your first classification to start organizing the bestiary.</p>
+                <a class="btn btn-primary" href="/monster-types/new">Add Monster Type</a>
+            </div>
+        <% } %>
+    </main>
 </body>
 </html>
