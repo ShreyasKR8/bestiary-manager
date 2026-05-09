@@ -47,12 +47,14 @@ exports.createMonsterType = [
 
     async (req, res) => {
     const errors = validationResult(req);
+    console.log("homie");
     if(!errors.isEmpty()){
         return res.status(400).render("monsterTypeForm", {
                 errors: errors.array(),
                 data: req.body,
             });
     }
+    console.log("homie yeah");
 
     const monsterTypeName = req.body.name;
     const description = req.body.desc;
@@ -106,6 +108,11 @@ exports.deleteMonsterType = async (req, res) => {
     const monsterTypeId = Number(req.params.id);
     if(Number.isNaN(monsterTypeId)){
         return res.status(400).send("Invalid monster type id");
+    }
+
+    const adminKey = req.body.adminKey;
+    if(adminKey !== process.env.ADMIN_KEY) {
+        return res.status(403).send("Invalid admin key");
     }
 
     const monsterType = await db.getMonsterType(monsterTypeId);
