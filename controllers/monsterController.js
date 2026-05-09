@@ -115,6 +115,11 @@ exports.deleteMonster = async (req, res) => {
         return res.status(400).send("Invalid monster id");
     }
 
+    const adminKey = req.body.adminKey;
+    if(adminKey !== process.env.ADMIN_KEY) {
+        return res.status(403).send("Invalid admin key");
+    }
+
     await db.deleteMonster(monsterId);
 
     res.redirect('/');
