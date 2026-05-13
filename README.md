@@ -104,6 +104,44 @@ Relationships are structured to maintain category integrity while preventing inv
 * Prevent deletion of categories currently in use
 * Browse monsters by category
 
+## Authentication
+
+The application uses session-based authentication with Passport.js and PostgreSQL-backed session storage to support secure user access and protected actions.
+
+### Authentication Features
+
+* User registration with securely hashed passwords using bcrypt
+* Login and logout functionality with Passport Local Strategy
+* Persistent authenticated sessions stored in PostgreSQL
+* Route-level authorization middleware for protected actions
+* Session management using express-session and connect-pg-simple
+* Protected monster creation, editing, and deletion workflows
+
+### Authentication Stack
+
+* Passport.js
+* passport-local
+* express-session
+* connect-pg-simple
+* bcryptjs
+
+### Protected Access
+
+Authenticated users can:
+
+* Create monsters
+* Edit monster entries
+* Delete monsters
+
+Public users can still browse and view bestiary content.
+
+### Security Practices
+
+* Password hashing with bcrypt
+* Environment variable-based secret management
+* Server-side authentication validation
+* Session-based access control
+
 ### Validation & Security
 
 * Input sanitization
