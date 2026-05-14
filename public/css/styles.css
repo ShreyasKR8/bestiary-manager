@@ -289,7 +289,11 @@ body > form {
 }
 
 .login-div h1,
-.register-div h1 {
+.register-div h1,
+.login-div p,
+.register-div p,
+.login-div a,
+.register-div a {
     text-align: center;
 }
 
