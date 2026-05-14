@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="/css/styles.css">
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,15 +7,17 @@
   <title>Sign Up</title>
 </head>
 <body>
-  <h1>Sign Up</h1>
-  <form action="/auth/register" method="POST">
-    <label for="username">Username</label>
-    <input id="username" name="username" placeholder="Username" type="text" required/>
-    <label for="email">Email</label>
-    <input id="email" name="email" placeholder="Email" type="email" required/>
-    <label for="password">Password</label>
-    <input id="password" name="password" type="password" required/>
-    <button type="submit">Sign Up</button>
-  </form>
+    <div class="register-div">
+        <h1>Sign Up</h1>
+        <form action="/auth/register" method="POST">
+            <label for="username">Username</label>
+            <input id="username" name="username" placeholder="Username" type="text" required />
+            <label for="email">Email</label>
+            <input id="email" name="email" placeholder="Email" type="email" required />
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" required />
+            <button type="submit" class="btn-primary">Sign Up</button>
+        </form>
+    </div>
 </body>
 </html>

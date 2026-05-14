@@ -266,6 +266,33 @@ body > form {
   box-shadow: var(--shadow);
 }
 
+.login-div,
+.register-div {
+    width: min(500px, calc(100% - 2rem));
+    margin: 2rem auto;
+    padding: clamp(1rem, 3vw, 1.5rem);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: rgba(255, 250, 241, 0.88);
+    box-shadow: var(--shadow);
+}
+
+.login-div form,
+.register-div form {
+    width: 300px;
+    margin: 50px auto;
+}
+
+.login-div button,
+.register-div button {
+    margin: 20px 0 0 0;
+}
+
+.login-div h1,
+.register-div h1 {
+    text-align: center;
+}
+
 .monsters-list ul,
 .monsters-of-type ul {
   display: grid;
